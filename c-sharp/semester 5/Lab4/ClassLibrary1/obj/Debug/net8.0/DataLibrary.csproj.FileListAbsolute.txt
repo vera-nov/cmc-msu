@@ -1,0 +1,23 @@
+C:\Users\Michael\source\repos\Lab2\ClassLibrary1\bin\Debug\net8.0\DataLibrary.deps.json
+C:\Users\Michael\source\repos\Lab2\ClassLibrary1\bin\Debug\net8.0\DataLibrary.dll
+C:\Users\Michael\source\repos\Lab2\ClassLibrary1\bin\Debug\net8.0\DataLibrary.pdb
+C:\Users\Michael\source\repos\Lab2\ClassLibrary1\obj\Debug\net8.0\DataLibrary.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\Michael\source\repos\Lab2\ClassLibrary1\obj\Debug\net8.0\DataLibrary.AssemblyInfoInputs.cache
+C:\Users\Michael\source\repos\Lab2\ClassLibrary1\obj\Debug\net8.0\DataLibrary.AssemblyInfo.cs
+C:\Users\Michael\source\repos\Lab2\ClassLibrary1\obj\Debug\net8.0\DataLibrary.csproj.CoreCompileInputs.cache
+C:\Users\Michael\source\repos\Lab2\ClassLibrary1\obj\Debug\net8.0\DataLibrary.dll
+C:\Users\Michael\source\repos\Lab2\ClassLibrary1\obj\Debug\net8.0\refint\DataLibrary.dll
+C:\Users\Michael\source\repos\Lab2\ClassLibrary1\obj\Debug\net8.0\DataLibrary.pdb
+C:\Users\Michael\source\repos\Lab2\ClassLibrary1\obj\Debug\net8.0\ref\DataLibrary.dll
+D:\cmc msu\c-sharp\Lab4\ClassLibrary1\bin\Debug\net8.0\DataLibrary.deps.json
+D:\cmc msu\c-sharp\Lab4\ClassLibrary1\bin\Debug\net8.0\DataLibrary.dll
+D:\cmc msu\c-sharp\Lab4\ClassLibrary1\bin\Debug\net8.0\DataLibrary.pdb
+D:\cmc msu\c-sharp\Lab4\ClassLibrary1\obj\Debug\net8.0\DataLibrary.GeneratedMSBuildEditorConfig.editorconfig
+D:\cmc msu\c-sharp\Lab4\ClassLibrary1\obj\Debug\net8.0\DataLibrary.AssemblyInfoInputs.cache
+D:\cmc msu\c-sharp\Lab4\ClassLibrary1\obj\Debug\net8.0\DataLibrary.AssemblyInfo.cs
+D:\cmc msu\c-sharp\Lab4\ClassLibrary1\obj\Debug\net8.0\DataLibrary.csproj.CoreCompileInputs.cache
+D:\cmc msu\c-sharp\Lab4\ClassLibrary1\obj\Debug\net8.0\DataLibrary.sourcelink.json
+D:\cmc msu\c-sharp\Lab4\ClassLibrary1\obj\Debug\net8.0\DataLibrary.dll
+D:\cmc msu\c-sharp\Lab4\ClassLibrary1\obj\Debug\net8.0\refint\DataLibrary.dll
+D:\cmc msu\c-sharp\Lab4\ClassLibrary1\obj\Debug\net8.0\DataLibrary.pdb
+D:\cmc msu\c-sharp\Lab4\ClassLibrary1\obj\Debug\net8.0\ref\DataLibrary.dll

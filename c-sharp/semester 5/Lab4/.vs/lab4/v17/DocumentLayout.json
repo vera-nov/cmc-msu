@@ -1,0 +1,87 @@
+{
+  "Version": 1,
+  "WorkspaceRootPath": "C:\\Users\\Vera\\source\\repos\\lab4\\",
+  "Documents": [
+    {
+      "AbsoluteMoniker": "D:0:0:{16F20F60-2EB9-41C7-95FD-608D131F6578}|lab4\\lab4.csproj|c:\\users\\vera\\source\\repos\\lab4\\lab4\\mainwindow.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}",
+      "RelativeMoniker": "D:0:0:{16F20F60-2EB9-41C7-95FD-608D131F6578}|lab4\\lab4.csproj|solutionrelative:lab4\\mainwindow.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{16F20F60-2EB9-41C7-95FD-608D131F6578}|lab4\\lab4.csproj|c:\\users\\vera\\source\\repos\\lab4\\lab4\\mainwindow.xaml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{16F20F60-2EB9-41C7-95FD-608D131F6578}|lab4\\lab4.csproj|solutionrelative:lab4\\mainwindow.xaml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{3DB0E4A5-8AE9-48B8-BAE5-D34E6EEBBDC8}|ClassLibrary\\ClassLibrary.csproj|c:\\users\\vera\\source\\repos\\lab4\\classlibrary\\dataitem.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{3DB0E4A5-8AE9-48B8-BAE5-D34E6EEBBDC8}|ClassLibrary\\ClassLibrary.csproj|solutionrelative:classlibrary\\dataitem.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{3DB0E4A5-8AE9-48B8-BAE5-D34E6EEBBDC8}|ClassLibrary\\ClassLibrary.csproj|c:\\users\\vera\\source\\repos\\lab4\\classlibrary\\datacollection.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{3DB0E4A5-8AE9-48B8-BAE5-D34E6EEBBDC8}|ClassLibrary\\ClassLibrary.csproj|solutionrelative:classlibrary\\datacollection.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    }
+  ],
+  "DocumentGroupContainers": [
+    {
+      "Orientation": 0,
+      "VerticalTabListWidth": 256,
+      "DocumentGroups": [
+        {
+          "DockedWidth": 200,
+          "SelectedChildIndex": 1,
+          "Children": [
+            {
+              "$type": "Document",
+              "DocumentIndex": 2,
+              "Title": "DataItem.cs",
+              "DocumentMoniker": "C:\\Users\\Vera\\source\\repos\\lab4\\ClassLibrary\\DataItem.cs",
+              "RelativeDocumentMoniker": "ClassLibrary\\DataItem.cs",
+              "ToolTip": "C:\\Users\\Vera\\source\\repos\\lab4\\ClassLibrary\\DataItem.cs",
+              "RelativeToolTip": "ClassLibrary\\DataItem.cs",
+              "ViewState": "AgIAAFcAAAAAAAAAAAAuwA8AAAAeAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-04-08T05:21:20.407Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 0,
+              "Title": "MainWindow.xaml",
+              "DocumentMoniker": "C:\\Users\\Vera\\source\\repos\\lab4\\lab4\\MainWindow.xaml",
+              "RelativeDocumentMoniker": "lab4\\MainWindow.xaml",
+              "ToolTip": "C:\\Users\\Vera\\source\\repos\\lab4\\lab4\\MainWindow.xaml",
+              "RelativeToolTip": "lab4\\MainWindow.xaml",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003549|",
+              "WhenOpened": "2025-04-08T05:20:56.996Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 1,
+              "Title": "MainWindow.xaml.cs",
+              "DocumentMoniker": "C:\\Users\\Vera\\source\\repos\\lab4\\lab4\\MainWindow.xaml.cs",
+              "RelativeDocumentMoniker": "lab4\\MainWindow.xaml.cs",
+              "ToolTip": "C:\\Users\\Vera\\source\\repos\\lab4\\lab4\\MainWindow.xaml.cs",
+              "RelativeToolTip": "lab4\\MainWindow.xaml.cs",
+              "ViewState": "AgIAACUAAAAAAAAAAAAswCwAAAAvAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-04-08T05:20:53.42Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 3,
+              "Title": "DataCollection.cs",
+              "DocumentMoniker": "C:\\Users\\Vera\\source\\repos\\lab4\\ClassLibrary\\DataCollection.cs",
+              "RelativeDocumentMoniker": "ClassLibrary\\DataCollection.cs",
+              "ToolTip": "C:\\Users\\Vera\\source\\repos\\lab4\\ClassLibrary\\DataCollection.cs",
+              "RelativeToolTip": "ClassLibrary\\DataCollection.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAABEAAAAlAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-04-08T05:27:54.671Z",
+              "EditorCaption": ""
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

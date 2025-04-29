@@ -1,0 +1,7 @@
+# depslib dependency file v1.0
+1745919599 source:d:\cmc msu\numerical methods\ode\main.cpp
+	<iostream>
+	<vector>
+	<iomanip>
+	<cmath>
+

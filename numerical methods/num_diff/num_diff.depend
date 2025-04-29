@@ -1,0 +1,6 @@
+# depslib dependency file v1.0
+1743686316 source:d:\cmc msu\numerical methods\num_diff\main.cpp
+	<iostream>
+	<iomanip>
+	<cmath>
+

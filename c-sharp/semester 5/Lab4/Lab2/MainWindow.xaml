@@ -1,0 +1,159 @@
+﻿<Window x:Class="Lab2.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:Lab2"
+        xmlns:lib="clr-namespace:DataLibrary;assembly=DataLibrary"
+        mc:Ignorable="d"
+        Background="DarkOliveGreen"
+        Title="MainWindow" Height="450" Width="800">
+
+
+    <Window.Resources>
+        <lib:DataItem x:Key = "key_DataItem"/>
+        <lib:DataItem x:Key = "key_DataItem_additional" Name ="NEW_STR"/>
+        <local:DataItemConverter x:Key="key_DataItemConverter"/>
+
+        <Style x:Key="key_Style_Titles">
+            <Setter Property="Control.HorizontalAlignment" Value="Center"/>
+            <Setter Property="Control.HorizontalAlignment" Value="Center"/>
+            <Setter Property="Control.VerticalAlignment" Value="Top"/>
+            <Setter Property="Control.FontFamily" Value="Segoe UI"/>
+            <Setter Property="Control.FontStyle" Value="Italic"/>
+            <Setter Property="Control.Foreground" Value="Yellow"/>
+            <Setter Property="Control.FontSize" Value="15"/>
+            <Setter Property="Control.FontWeight" Value="Bold"/>
+        </Style>
+
+        <Style TargetType="{x:Type TextBlock}">
+            <Setter Property="Control.HorizontalAlignment" Value="Center"/>
+            <Setter Property="Control.VerticalAlignment" Value="Top"/>
+            <Setter Property="Control.FontFamily" Value="Georgia"/>
+            <Setter Property="Control.FontStyle" Value="Italic"/>
+            <Setter Property="Control.Foreground" Value="DarkKhaki"/>
+            <Setter Property="Control.FontSize" Value="13"/>
+            <Setter Property="Control.FontWeight" Value="Bold"/>
+        </Style>
+
+
+
+        <Style TargetType="{x:Type Button}">
+            <Setter Property="Control.HorizontalAlignment" Value="Center"/>
+            <Setter Property="Control.VerticalAlignment" Value="Center"/>
+            <Setter Property="Control.FontFamily" Value="India"/>
+            <Setter Property="Control.FontStyle" Value="Italic"/>
+            <Setter Property="Control.Foreground" Value="Black"/>
+            <Setter Property="Control.FontSize" Value="13"/>
+            <Setter Property="Control.FontWeight" Value="Bold"/>
+            <Setter Property="Background" Value="RosyBrown"/>
+        </Style>
+        
+        <Style TargetType="TextBox">
+            <Setter Property="Margin" Value="10"/>
+            <Setter Property="Padding" Value="5"/>
+            <Setter Property="BorderBrush" Value="Gray"/>
+            <Setter Property="BorderThickness" Value="1"/>
+            <Setter Property="Background" Value="White"/>
+
+            <Style.Triggers>
+                <Trigger Property="Validation.HasError" Value="True">
+                    <Setter Property="Background" Value="LightCoral"/>
+                    <Setter Property="BorderBrush" Value="Red"/>
+                    <Setter Property="ToolTip"
+                            Value="{Binding RelativeSource={RelativeSource Self}, 
+                                           Path=(Validation.Errors)[0].ErrorContent}"/>
+                </Trigger>
+            </Style.Triggers>
+        </Style>
+    </Window.Resources>
+
+
+    <Grid Name="grid_Main">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="1.3*"/>
+            <RowDefinition Height="6*"/>
+            <RowDefinition Height="0.5*"/>
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="1*"/>
+            <ColumnDefinition Width="1*"/>
+            <ColumnDefinition Width="1*"/>
+        </Grid.ColumnDefinitions>
+        <StackPanel Grid.Column="2" Grid.Row="1">
+            <TextBlock Text="DataItem From Resources"
+                Style="{StaticResource key_Style_Titles}"
+                Margin="10,25,5,5" 
+                Grid.Column="2"  Grid.Row="1" TextWrapping="Wrap"/>
+            <TextBlock Text="{Binding Source={StaticResource key_DataItem}, Converter={StaticResource key_DataItemConverter}}" 
+                       Grid.Column="2" HorizontalAlignment="Center" Margin="10,10,10,10" Height="90" Grid.Row="1" 
+                       TextWrapping="Wrap" VerticalAlignment="Center"/>
+            <TextBox TextWrapping="Wrap" Text="{Binding Source={StaticResource key_DataItem}, Path=Name}" Background="MistyRose"
+                     Height="30" Margin="10,-15,10,10" Grid.Row="1" Grid.Column="2" HorizontalAlignment="Center" Width="200" />
+            <Button Content="Update Properties in DataItem" Click="Button_UpdatePropertiesInDataItem_Click" Margin="10" Height="31" Width="200"/>
+            <Button Content="Show DataItem" Click="Button_ShowDataItem_Click" Margin="10" Height="31" Width="200"/>
+            <Button Content="Show DataCollection" Click="Button_ShowDataCollection_Click" Margin="10" Height="31" Width="200"/>
+        </StackPanel>
+
+        <StackPanel Grid.Column="0" Grid.Row="1" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Margin="20">
+            <ListBox ItemsSource="{Binding Obs}"  Grid.Row="1"
+                    IsSynchronizedWithCurrentItem="True" Height="285" Background="MistyRose">
+                <ListBox.ItemTemplate>
+                    <DataTemplate>
+                        <StackPanel Orientation="Vertical" Margin="5">
+                            <TextBox Text="{Binding Date, StringFormat=d, ValidatesOnDataErrors=True, UpdateSourceTrigger=PropertyChanged}" />
+                            <TextBox Text="{Binding LowerBound, ValidatesOnDataErrors=True, UpdateSourceTrigger=PropertyChanged}" />
+                            <TextBox Text="{Binding UpperBound, ValidatesOnDataErrors=True, UpdateSourceTrigger=PropertyChanged}" />
+                        </StackPanel>
+                    </DataTemplate>
+                </ListBox.ItemTemplate>
+                <ListBox.ItemContainerStyle>
+                    <Style TargetType="ListBoxItem">
+                        <Setter Property="HorizontalContentAlignment" Value="Center"/>
+                        <Setter Property="VerticalContentAlignment" Value="Center"/>
+                    </Style>
+                </ListBox.ItemContainerStyle>
+            </ListBox>
+        </StackPanel>
+
+        <StackPanel Grid.Column="0" Grid.Row="0" HorizontalAlignment="Center" Margin="10">
+            <TextBlock TextWrapping="Wrap" 
+                Style="{StaticResource key_Style_Titles}"
+                Text="ObservableCollection&lt;DataItem&gt; from DataContext"/>
+        </StackPanel>
+
+        <StackPanel Grid.Column="1" Grid.Row="0" HorizontalAlignment="Center" Margin="10">
+            <TextBlock TextWrapping="Wrap" 
+                Style="{StaticResource key_Style_Titles}"
+                Text="DataItem from Resources"/>
+        </StackPanel>
+
+        <StackPanel Grid.Column="2" Grid.Row="0" Margin="20,10,20,15">
+            <Button Content="Update Collection" Click="Button_UpdateCollection_Click" HorizontalAlignment="Stretch" Height="25"/>
+        </StackPanel>
+
+        <StackPanel Grid.Column="0" Grid.Row="2" HorizontalAlignment="Stretch">
+            <TextBlock TextWrapping="Wrap" HorizontalAlignment="Center" VerticalAlignment="Center" Text="{Binding Obs/SITuple}" />
+        </StackPanel>
+
+        <StackPanel Grid.Column="1" Grid.Row="1">
+            <StackPanel Height="314">
+                <TextBlock TextWrapping="Wrap" Text="Date:" HorizontalAlignment="Left" Margin="30,30,0,0"/>
+                <TextBlock TextWrapping="Wrap" Text="LowerBound:" HorizontalAlignment="Left" Margin="30,30,0,0"/>
+                <TextBlock TextWrapping="Wrap" Text="UpperBound:" HorizontalAlignment="Left" Margin="30,30,0,0"/>
+            </StackPanel>
+        </StackPanel>
+
+        <TextBox TextWrapping="Wrap" Text="{Binding Source={StaticResource key_DataItem}, Path=Date, ValidatesOnDataErrors=True, UpdateSourceTrigger=PropertyChanged}" 
+                 Width="169" Grid.Column="1" HorizontalAlignment="Left" Margin="97,20,0,0" Grid.Row="1" 
+                 VerticalAlignment="Top" Height="27"
+                 />
+        <TextBox TextWrapping="Wrap" Text="{Binding Source={StaticResource key_DataItem}, Path=LowerBound, ValidatesOnDataErrors=True, UpdateSourceTrigger=PropertyChanged}"
+                 Width="120" Height="27" Grid.Column="1" HorizontalAlignment="Left" Margin="146,69,0,0" Grid.Row="1" 
+                 VerticalAlignment="Top"/>
+        <TextBox TextWrapping="Wrap" Text="{Binding Source={StaticResource key_DataItem}, Path=UpperBound, ValidatesOnDataErrors=True, UpdateSourceTrigger=PropertyChanged}"
+                 Width="133" Height="27" Grid.Column="1" HorizontalAlignment="Left" Margin="146,116,0,0" Grid.Row="1"
+                 VerticalAlignment="Top"/>
+
+    </Grid>
+</Window>

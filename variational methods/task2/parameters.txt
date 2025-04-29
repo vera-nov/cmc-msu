@@ -1,0 +1,5 @@
+main.py astranaut.png astranaut_init_snake.txt astranaut_result.png 0.008 10 1000 0 1
+main.py coffee.png coffee_init_snake.txt coffee_result.png 0.01 10 1000 0.1 1.1
+main.py coins.png coins_init_snake.txt coins_result.png 0.02 10 1000 0 1.5
+main.py microarray.png microarray_init_snake.txt microarray_result.png 0.001 5 1000 0 1
+main.py nucleus.png nucleus_init_snake.txt nucleus_result.png 0.01 1 1000 0.1 1
