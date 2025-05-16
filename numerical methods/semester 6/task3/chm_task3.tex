@@ -1,0 +1,211 @@
+\documentclass[12pt]{article}
+\usepackage[margin=1in]{geometry} 
+\usepackage{amsmath,amsthm,amssymb}
+\usepackage[T2A]{fontenc}
+\usepackage[russian]{babel}
+\usepackage{lipsum}
+\usepackage{graphicx}
+\usepackage{listings}
+\usepackage{xcolor}
+\usepackage{float}
+
+\newcommand{\N}{\mathbb{N}}
+\newcommand{\Z}{\mathbb{Z}}
+\newcommand{\forceindent}{\leavevmode{\parindent=2em\indent}}
+% \renewcommand{\baselinestretch}{1.5} 
+\setlength{\parindent}{0pt}
+
+\title{Численные методы решения стационарного уравнения теплопроводности. Отчет}
+\author{Новикова Вера, 301 группа}
+\date{Вариант 4.3}
+
+\begin{document}
+\maketitle
+
+\section*{Постановка задачи}
+В данной работе реализовано численное решение краевой задачи для одномерного стационарного уравнения диффузии:
+\[
+\begin{cases}
+    -\frac{d}{dx} \bigg(p(x) \frac{du}{dx}\bigg) +q(x)u(x)= f(x), & x \in [0, L], \text{ } L = \pi\\
+    -p(0)\frac{du}{dx}(0) + \kappa_0 u(0) = g_0, & \kappa_0 = 1, g_0 = 1 \\ 
+    u(L) = g_1, & g_1 = 1 
+\end{cases}
+\]
+
+\begin{center}
+\begin{minipage}{0.45\textwidth}
+\begin{equation*}
+p(x) =
+\begin{cases} 
+1 + \frac{1}{4}\sin(x), & x \in [0; \frac{\pi}{3}), \\
+1 + \frac{1}{3}\sin(x), & x \in \left(\frac{\pi}{3}, \frac{2\pi}{3}\right), \\
+1 + \frac{1}{2}\sin(x), & x \in \left(\frac{2\pi}{3}, \pi\right]
+\end{cases}
+\end{equation*}
+\end{minipage}
+\hfill
+\begin{minipage}{0.45\textwidth}
+\begin{equation*}
+q(x) =
+\begin{cases} 
+1, & x \in [0; \frac{\pi}{3}), \\
+2, & x \in \left(\frac{\pi}{3}, \frac{2\pi}{3}\right), \\
+1, & x \in \left(\frac{2\pi}{3}, \pi\right]
+\end{cases}
+\end{equation*}
+\end{minipage}
+\end{center}
+\[
+f(x) = 1-cos(2x)
+\]
+Была построена консервативная схема на неравномерной расчетной сетке и приведен вывод ее погрешности аппроксимации, а также продемонстрирована сходимость метода с помощью метода Рунге.
+
+\section*{Вывод порядка погрешности аппроксимации схемы на неравномерной сетке}
+Решаем уравнение:
+\[
+-\frac{d}{dx} \bigg(p(x) \frac{du}{dx}\bigg) +q(x)u(x)= f(x)
+\]
+Перепишем его в виде:
+\begin{equation}
+-p(x)u''(x)-p'(x)u'(x)+q(x)u(x)-f(x)=0
+\end{equation}
+Пусть $\{x_i\}$ - узлы сетки. Обозначим 
+\[
+x_{i+\frac{1}{2}} = \frac{x_i+x_{i+1}}{2}, \text{ } x_{i-\frac{1}{2}} = \frac{x_{i-1}+x_{i}}{2}, \text{ } h_i=x_{i+1}-x_i, \text{ } h_{i-1}=x_i-x_{i-1}
+\]
+Проинтегрируем $(1)$ от $x_{i-1/2}$ до $x_{i+1/2}$:
+\[
+-p(x)\frac{du}{dx}\bigg|_{x_{i-1/2}}^{x_{i+1/2}} + \int_{x_{i-1/2}}^{x_{i+1/2}}\big[q(x)u(x)-f(x)\big]dx =0
+\]
+Если функция $q(x)$ разрывна, то при интегрировании возникнут проблемы. Для этого приблизим ее некоторым средним значением: $\overline{q_i} = \frac{1}{h}\int_{x_{i-1/2}}^{x_{i+1/2}}q(x)dx$. Тогда $\int qu \approx \overline{q}\int u$.
+
+Ищем погрешность аппроксимации решения:
+\[
+-p_{i+1/2}\frac{u_{i+1}-u_i}{h_i}+p_{i-1/2}\frac{u_i-u_{i-1}}{h_{i-1}} + \frac{h_i+h_{i-1}}{2}\big[\overline{q_i}u_i-f_i\big]=0
+\]
+\[
+-\frac{2}{h_i+h_{i-1}}\bigg[p_{i+1/2}\frac{u_{i+1}-u_i}{h_i} - p_{i-1/2}\frac{u_i-u_{i-1}}{h_{i-1}}\bigg]+q_iu_i-f_i=0
+\]
+Для этого разложим $u_{i\pm 1}$ и $p_{i\pm 1/2}$ в ряд Тейлора:
+\[
+u_{i + 1} = u_i+h_i\frac{du_i}{dx} + \frac{h_i^2}{2} \frac{d^2u_i}{dx^2} +  \frac{h_i^3}{6} \frac{d^3u_i}{dx^3} + \mathrm{O}(h_i^4)
+\]
+\[
+u_{i - 1} = u_i-h_i\frac{du_i}{dx} + \frac{h_i^2}{2} \frac{d^2u_i}{dx^2} - \frac{h_i^3}{6} \frac{d^3u_i}{dx^3} + \mathrm{O}(h_i^4)
+\]
+\[
+p_{i + 1/2} = p_i+\frac{h_i}{2}\frac{dp_i}{dx} + \frac{h_i^2}{8} \frac{d^2p_i}{dx^2} +  \frac{h_i^3}{48} \frac{d^3p_i}{dx^3} + \mathrm{O}(h_i^4)
+\]
+\[
+p_{i - 1/2} = p_i-\frac{h_i}{2}\frac{dp_i}{dx} + \frac{h_i^2}{8} \frac{d^2p_i}{dx^2} - \frac{h_i^3}{48} \frac{d^3p_i}{dx^3} + \mathrm{O}(h_i^4)
+\]
+Обозначим $\overline{h_i} = \frac{h_i+h_{i-1}}{2}$, $h=\max\limits_{i}(h_i)$ 
+Тогда оценим погрешность аппроксимации $\Psi$ как:
+\[
+\Psi = -\frac{1}{\overline{h_i}}\bigg[\big( p_i+\frac{h_i}{2}\frac{dp_i}{dx} + \frac{h_i^2}{8} \frac{d^2p_i}{dx^2} + \mathrm{O}(h^3)\big) \big(\frac{du_i}{dx}+\frac{h_i}{2}\frac{d^2u_i}{dx^2} +\frac{h_i^2}{6}\frac{d^3u_i}{dx^3} + \mathrm{O}(h^3)\big) - 
+\]
+\[
+- \big( p_i-\frac{h_{i-1}}{2}\frac{dp_i}{dx} + \frac{h_{i-1}^2}{8} \frac{d^2p_i}{dx^2} + \mathrm{O}(h^3) \big) \big( \frac{du_i}{dx}-\frac{h_{i-1}}{2}\frac{d^2u_i}{dx^2} +\frac{h_{i-1}^2}{6}\frac{d^3u_i}{dx^3} + \mathrm{O}(h^3)\big)\bigg] + q_iu_i-f_i =
+\]
+\[
+= -\frac{1}{\overline{h_i}}\bigg[ p_i\big(\overline{h_i}\frac{d^2u_i}{dx^2} + \frac{h_i^2-h_{i-1}^2}{6} \frac{d^3u_i}{dx^3} + \mathrm{O}(h^3)\big) + \frac{dp_i}{dx}\big( \overline{h_i}\frac{du_i}{dx} + \frac{h_i^2-h_{i-1}^2}{4} \frac{d^2u_i}{dx^2} + \mathrm{O}(h^3)\big) +
+\]
+\[
++ \frac{d^2p_i}{dx^2}\big( \frac{h_i^2-h_{i-1}^2}{8}\frac{du_i}{dx} + \mathrm{O}(h^3)\big)\bigg]+ q_iu_i - f_i = -p_i\frac{d^2u_i}{dx^2}-p_i\frac{h_i-h_{i-1}}{3}\frac{d^3u_i}{dx^3} -
+\]
+\[
+- \frac{dp_i}{dx} \frac{du_i}{dx} -\frac{dp_i}{dx}\frac{h_i-h_{i-1}}{2} \frac{d^2u_i}{dx^2} - \frac{d^2p_i}{dx^2} \frac{h_i-h_{i-1}}{4} \frac{du_i}{dx} +q_iu_i -f_i+ \mathrm{O}(h^2) =
+\]
+\[
+= \{(1)\} = (h_i-h_{i-1})(-\frac{p_i}{3}\frac{d^3u_i}{dx^3} - \frac{1}{2} \frac{dp_i}{dx} \frac{d^2u_i}{dx^2} - \frac{1}{4} \frac{dp_i}{dx} \frac{du_i}{dx}) + \mathrm{O}(h^2) = C(h_i-h_{i-1}) + \mathrm{O}(h^2)
+\]
+Если $h_i-h_{i-1} = \mathrm{O}(h^2)$, то общая погрешность аппроксимации порядка 2.
+
+Ищем погрешность аппроксимации граничного условия:
+\[
+-p(0)\frac{du}{dx}(0) + \kappa_0 u(0) = g_0
+\]
+Проинтегрируем (1) от $x_0$ до $x_{1/2}$:
+\[
+-p(x)\frac{du}{dx}\bigg|_{x_0}^{x_{1/2}} + \int_{x_0}^{x_{1/2}}[q(x)u(x)-f(x)]dx
+\]
+С учетом:
+\[
+\int_0^{x_{1/2}} [q(x)u(x) - f(x)] \, dx \approx (q(0)u(0) - f(0)) \frac{h_1}{2}
+\]
+Получаем:
+\[
+-p_{1/2}u'_{1/2} + \frac{h_1}{2}\big(q(0)u(0) - f(0)\big) = -p(0)u'(0) = g_0-\kappa_0u(0)
+\]
+Разложим по Тейлору:
+\[
+-\big(p(0) + \frac{h_1}{2} p'(0) + \mathrm{O}(h^2)\big) \big(u'(0) + \frac{h_1}{2} u''(0) + \mathrm{O}(h^2) \big) + \frac{h_1}{2}\big(q(0)u(0) - f(0)\big)  = g_0^h-\kappa_0u(0)
+\]
+\[
+-p(0)u'(0) - \frac{h_1}{2} p'(0) u'(0) - \frac{h_1}{2} p(0) u''(0) + \frac{h_1}{2} (q(0)u(0) - f(0))+ \kappa_0 u(0) + O(h^2) = g_0^h
+\]
+
+Погрешность
+\[
+\Psi = g_0 - g_0^h = g_0 + p(0)u'(0)  + \frac{h_1}{2} p'(0) u'(0)+ \frac{h_1}{2} p(0) u''(0) - \frac{h_1}{2} \big(q(0)u(0) - f(0)\big) - \kappa_0 u(0) + O(h^2)
+\]
+
+В силу граничных условий и равенства уравнения погрешность \(\Psi = O(h^2)\) (остальные слагаемые сокращаются).
+
+Итак, для того, чтобы порядок аппроксимации схемы был равен 2, необходимо выполнение условия \( h_{i} - h_{i-1} = O(h^2) \), где $h=\max\limits_{i}(h_i)$.
+
+\section*{Построение неравномерной сетки}
+Обозначим $\phi(t): [0,1] \rightarrow [\alpha, \beta]$ - вспомогательная функция, по которой будем выбирать узлы сетки. На $\phi$ наложим следующие ограничения:
+\begin{enumerate}
+	\item $\phi(t) \in C^2[0, 1]$
+	\item $\phi'(t) > 0$
+\end{enumerate}
+Покажем, что при $\phi(t) = \alpha + (\beta - \alpha) \frac{e^{ct}-1}{e^c-1}$ построенная неравномерная сетка $\{x_i\} = \{ \phi(t_i)\}, t_i=i\theta, \theta = \frac{1}{n}, i = \overline{1, n}$ удовлетворяет условию для 2 порядка аппроксимации схемы.
+\[
+\phi(t) \in C^2[0, 1], \quad \phi'(t) = (\beta - \alpha)\frac{ce^{ct}}{e^c-1} > 0
+\]
+\[
+h_{i+1} = x_{i+1} - x_{i} = \phi(t_{i+1}) - \phi(t_i) = (\beta - \alpha) \frac{e^{c(i+1)\theta}-e^{ci\theta}}{e^c-1} = (\beta - \alpha) e^{ci\theta}\frac{e^{c\theta}-1}{e^c-1}
+\]
+\[
+h_{i} = x_{i} - x_{i-1} = \phi(t_{i}) - \phi(t_{i-1}) = (\beta - \alpha) \frac{e^{ci\theta}-e^{c(i-1)\theta}}{e^c-1} = (\beta - \alpha) e^{ci\theta}\frac{1- e^{-c\theta}}{e^c-1}
+\]
+\[
+\frac{h_{i+1} - h_i}{h_i^2} = \frac{\beta-\alpha}{e^c-1}e^{ci\theta}(e^{c\theta}-2+e^{-c\theta})\bigg(\frac{e^c-1}{(\beta-\alpha)e^{ci\theta}(1-e^{-c\theta})}\bigg)^2 = \frac{e^{-c\theta}(e^{c\theta}-1)^2(e^c-1)}{(\beta-\alpha)e^{ci\theta}(1-e^{-c\theta})^2}
+\]
+\[
+\frac{h_{i+1} - h_i}{h_i^2} \rightarrow const, \text{ } \theta \rightarrow 0
+\]
+Итак, для построения сетки будем использовать вспомогательную функцию (положим $\alpha = 0, \beta = \pi, c = 1$):
+\[
+\phi(t)=\pi\frac{e^t-1}{e-1}
+\]
+
+
+
+Будем строить сетку так, чтобы все разрывы попадали в узлы.
+%\begin{figure}[h]
+    %\centering
+    %\includegraphics[width=0.47\textwidth]{oblast.png} % Путь к файлу изображения
+%\end{figure}
+
+\section*{Код программы}
+\lstset{
+    language=C++, % Set language
+    basicstyle=\ttfamily\small, % Monospace font
+    keywordstyle=\color{blue}, % Keywords in blue
+    commentstyle=\color{green}, % Comments in green
+    stringstyle=\color{red}, % Strings in red
+    numbers=left, % Line numbers on the left
+    numberstyle=\tiny\color{gray}, % Line number style
+    frame=single, % Border around the code
+    breaklines=true, % Automatic line breaking
+    tabsize=4 % Tab size
+}
+\begin{lstlisting}
+int main()
+{
+    return 0;
+}
+\end{lstlisting}
+\end{document}

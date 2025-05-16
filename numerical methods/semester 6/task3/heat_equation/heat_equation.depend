@@ -1,0 +1,9 @@
+# depslib dependency file v1.0
+1746979444 source:d:\cmc msu\numerical methods\semester 6\task3\heat_equation\main.cpp
+	<iostream>
+	<vector>
+	<cmath>
+	<algorithm>
+	<fstream>
+	<iomanip>
+
