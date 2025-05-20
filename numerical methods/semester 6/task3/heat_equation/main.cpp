@@ -33,21 +33,37 @@ private:
     double phi(double t) const {
         return L * (exp(t) - 1.0) / (exp(1.0) - 1.0);
     }
-    double p(double x) const {
-        if (std::abs(x - M_PI/3.0) < 1e-12) return 1.0 + 0.25*sin(x); // Match left
-        else if (std::abs(x - 2.0*M_PI/3.0) < 1e-12) return 1.0 + 0.5*sin(x); // Match right
+
+    /*double p(double x) const {
+        if (x == M_PI/3.0) return 1.0 + sin(x)/8.0 + sin(x)/6.0;
+        else if (x == 2.0*M_PI/3.0) return 1.0 + sin(x)/4.0 + sin(x)/6.0;
         if (x < M_PI/3.0) return 1.0 + 0.25*sin(x);
         else if (x < 2.0*M_PI/3.0) return 1.0 + sin(x)/3.0;
         else return 1.0 + 0.5*sin(x);
     }
 
-
     double q(double x) const {
-        if (std::abs(x - M_PI/3.0) < 1e-12) return 1.5;           // average of 1 and 2
-        else if (std::abs(x - 2.0*M_PI/3.0) < 1e-12) return 1.5;  // average of 2 and 1
+        if (x == M_PI/3.0 || x == 2.0*M_PI/3.0) return 1.5;
         else if (x < M_PI/3.0) return 1.0;
         else if (x < 2.0*M_PI/3.0) return 2.0;
         else return 1.0;
+    } */
+
+    double p(double x) const {
+        return 1 + sin(x)/3.0;
+    }
+
+    double q(double x) {
+        const double pi = M_PI;
+        const double a = pi/3.0;
+        const double b = 2.0*pi/3.0;
+        const double k = 20.0;
+
+        const double transition1 = 1.0/(1.0 + exp(-k*(x - a)));
+        const double transition2 = 1.0/(1.0 + exp(-k*(x - b)));
+        double y = 1.0 + transition1 - transition2;
+
+        return y;
     }
 
 
@@ -72,12 +88,12 @@ public:
             for (int i = 1; i < block; ++i) {
                 x[2 * block - 2 + i] = 2 * M_PI/3 + step * i;
             }
-        } else {
+        } /* else {
             for (int i = 0; i < n; ++i) {
                 double t = static_cast<double>(i) / (n - 1);
                 x[i] = phi(t);
             }
-        } /*
+        } */
         else {
             const double t_pi3 = log(1.0 + (M_E - 1.0) / 3.0);
             const double t_2pi3 = log(1.0 + 2.0 * (M_E - 1.0) / 3.0);
@@ -104,7 +120,7 @@ public:
                 }
                 x.back() = M_PI;
             }
-        } */
+        }
         h[0] = 0;
         for (int i = 1; i < n; ++i) {
             h[i] = x[i] - x[i-1];
@@ -272,7 +288,7 @@ int main()
 
     cout << fixed << setprecision(6);
 
-    for (int N = 7; N < 100; N += 6) {
+    for (int N = 7; N < 100; N += 3) {
         HeatEquationSolver solver1(N);
         HeatEquationSolver solver2(2*N-1);
         HeatEquationSolver solver3(4*N-3);
@@ -317,7 +333,7 @@ int main()
 
     vector<int> test_nodes = {7, 19, 28, 32, 41};
 
-    for (int N : test_nodes) {
+    for (int N = 7; N < 100; N += 3) {
         HeatEquationSolver solver1(N, true);
         HeatEquationSolver solver2(2*N-1, true);
         HeatEquationSolver solver3(4*N-3, true);
