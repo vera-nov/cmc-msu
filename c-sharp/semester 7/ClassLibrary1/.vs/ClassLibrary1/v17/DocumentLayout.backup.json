@@ -1,0 +1,121 @@
+{
+  "Version": 1,
+  "WorkspaceRootPath": "D:\\cmc msu\\c-sharp\\semester 7\\ClassLibrary1\\",
+  "Documents": [
+    {
+      "AbsoluteMoniker": "D:0:0:{EE12C3A3-E24F-4BCB-99DA-0369467AD41E}|ClassLibrary1.Tests\\ClassLibrary1.Tests.csproj|d:\\cmc msu\\c-sharp\\semester 7\\classlibrary1\\classlibrary1.tests\\arcfaceembeddertests.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{EE12C3A3-E24F-4BCB-99DA-0369467AD41E}|ClassLibrary1.Tests\\ClassLibrary1.Tests.csproj|solutionrelative:classlibrary1.tests\\arcfaceembeddertests.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{EE12C3A3-E24F-4BCB-99DA-0369467AD41E}|ClassLibrary1.Tests\\ClassLibrary1.Tests.csproj|d:\\cmc msu\\c-sharp\\semester 7\\classlibrary1\\classlibrary1.tests\\classlibrary1.tests.csproj||{FA3CD31E-987B-443A-9B81-186104E8DAC1}|",
+      "RelativeMoniker": "D:0:0:{EE12C3A3-E24F-4BCB-99DA-0369467AD41E}|ClassLibrary1.Tests\\ClassLibrary1.Tests.csproj|solutionrelative:classlibrary1.tests\\classlibrary1.tests.csproj||{FA3CD31E-987B-443A-9B81-186104E8DAC1}|"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{3010683E-9270-4E6F-9129-83E052699576}|ClassLibrary1\\ClassLibrary1.csproj|d:\\cmc msu\\c-sharp\\semester 7\\classlibrary1\\classlibrary1\\arcfaceembedder.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{3010683E-9270-4E6F-9129-83E052699576}|ClassLibrary1\\ClassLibrary1.csproj|solutionrelative:classlibrary1\\arcfaceembedder.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{396B00CA-4D43-4D29-B705-D8CF2AAE53C5}|ArcFaceDemo\\ArcFaceDemo.csproj|d:\\cmc msu\\c-sharp\\semester 7\\classlibrary1\\arcfacedemo\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{396B00CA-4D43-4D29-B705-D8CF2AAE53C5}|ArcFaceDemo\\ArcFaceDemo.csproj|solutionrelative:arcfacedemo\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{3010683E-9270-4E6F-9129-83E052699576}|ClassLibrary1\\ClassLibrary1.csproj|d:\\cmc msu\\c-sharp\\semester 7\\classlibrary1\\classlibrary1\\classlibrary1.csproj||{FA3CD31E-987B-443A-9B81-186104E8DAC1}|",
+      "RelativeMoniker": "D:0:0:{3010683E-9270-4E6F-9129-83E052699576}|ClassLibrary1\\ClassLibrary1.csproj|solutionrelative:classlibrary1\\classlibrary1.csproj||{FA3CD31E-987B-443A-9B81-186104E8DAC1}|"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{396B00CA-4D43-4D29-B705-D8CF2AAE53C5}|ArcFaceDemo\\ArcFaceDemo.csproj|d:\\cmc msu\\c-sharp\\semester 7\\classlibrary1\\arcfacedemo\\arcfacedemo.csproj||{FA3CD31E-987B-443A-9B81-186104E8DAC1}|",
+      "RelativeMoniker": "D:0:0:{396B00CA-4D43-4D29-B705-D8CF2AAE53C5}|ArcFaceDemo\\ArcFaceDemo.csproj|solutionrelative:arcfacedemo\\arcfacedemo.csproj||{FA3CD31E-987B-443A-9B81-186104E8DAC1}|"
+    }
+  ],
+  "DocumentGroupContainers": [
+    {
+      "Orientation": 0,
+      "VerticalTabListWidth": 256,
+      "DocumentGroups": [
+        {
+          "DockedWidth": 200,
+          "SelectedChildIndex": 1,
+          "Children": [
+            {
+              "$type": "Document",
+              "DocumentIndex": 1,
+              "Title": "ClassLibrary1.Tests.csproj",
+              "DocumentMoniker": "D:\\cmc msu\\c-sharp\\semester 7\\ClassLibrary1\\ClassLibrary1.Tests\\ClassLibrary1.Tests.csproj",
+              "RelativeDocumentMoniker": "ClassLibrary1.Tests\\ClassLibrary1.Tests.csproj",
+              "ToolTip": "D:\\cmc msu\\c-sharp\\semester 7\\ClassLibrary1\\ClassLibrary1.Tests\\ClassLibrary1.Tests.csproj",
+              "RelativeToolTip": "ClassLibrary1.Tests\\ClassLibrary1.Tests.csproj",
+              "ViewState": "AgIAAAYAAAAAAAAAAAAAABYAAABIAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000758|",
+              "WhenOpened": "2025-10-17T07:59:16.772Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 0,
+              "Title": "ArcFaceEmbedderTests.cs",
+              "DocumentMoniker": "D:\\cmc msu\\c-sharp\\semester 7\\ClassLibrary1\\ClassLibrary1.Tests\\ArcFaceEmbedderTests.cs",
+              "RelativeDocumentMoniker": "ClassLibrary1.Tests\\ArcFaceEmbedderTests.cs",
+              "ToolTip": "D:\\cmc msu\\c-sharp\\semester 7\\ClassLibrary1\\ClassLibrary1.Tests\\ArcFaceEmbedderTests.cs",
+              "RelativeToolTip": "ClassLibrary1.Tests\\ArcFaceEmbedderTests.cs",
+              "ViewState": "AgIAABgAAAAAAAAAAADwvx8AAAA4AAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-10-10T18:36:22.65Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 2,
+              "Title": "ArcFaceEmbedder.cs",
+              "DocumentMoniker": "D:\\cmc msu\\c-sharp\\semester 7\\ClassLibrary1\\ClassLibrary1\\ArcFaceEmbedder.cs",
+              "RelativeDocumentMoniker": "ClassLibrary1\\ArcFaceEmbedder.cs",
+              "ToolTip": "D:\\cmc msu\\c-sharp\\semester 7\\ClassLibrary1\\ClassLibrary1\\ArcFaceEmbedder.cs",
+              "RelativeToolTip": "ClassLibrary1\\ArcFaceEmbedder.cs",
+              "ViewState": "AgIAAHUAAAAAAAAAAAAiwIsAAAAtAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-10-10T18:35:22.748Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 5,
+              "Title": "ArcFaceDemo.csproj",
+              "DocumentMoniker": "D:\\cmc msu\\c-sharp\\semester 7\\ClassLibrary1\\ArcFaceDemo\\ArcFaceDemo.csproj",
+              "RelativeDocumentMoniker": "ArcFaceDemo\\ArcFaceDemo.csproj",
+              "ToolTip": "D:\\cmc msu\\c-sharp\\semester 7\\ClassLibrary1\\ArcFaceDemo\\ArcFaceDemo.csproj",
+              "RelativeToolTip": "ArcFaceDemo\\ArcFaceDemo.csproj",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAABcAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000758|",
+              "WhenOpened": "2025-10-11T10:07:16.897Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 3,
+              "Title": "Program.cs",
+              "DocumentMoniker": "D:\\cmc msu\\c-sharp\\semester 7\\ClassLibrary1\\ArcFaceDemo\\Program.cs",
+              "RelativeDocumentMoniker": "ArcFaceDemo\\Program.cs",
+              "ToolTip": "D:\\cmc msu\\c-sharp\\semester 7\\ClassLibrary1\\ArcFaceDemo\\Program.cs",
+              "RelativeToolTip": "ArcFaceDemo\\Program.cs",
+              "ViewState": "AgIAAAIAAAAAAAAAAAAAABcAAAANAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-10-11T10:06:12.508Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 4,
+              "Title": "ClassLibrary1.csproj",
+              "DocumentMoniker": "D:\\cmc msu\\c-sharp\\semester 7\\ClassLibrary1\\ClassLibrary1\\ClassLibrary1.csproj",
+              "RelativeDocumentMoniker": "ClassLibrary1\\ClassLibrary1.csproj",
+              "ToolTip": "D:\\cmc msu\\c-sharp\\semester 7\\ClassLibrary1\\ClassLibrary1\\ClassLibrary1.csproj",
+              "RelativeToolTip": "ClassLibrary1\\ClassLibrary1.csproj",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAA0AAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000758|",
+              "WhenOpened": "2025-10-11T09:52:43.288Z",
+              "EditorCaption": ""
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

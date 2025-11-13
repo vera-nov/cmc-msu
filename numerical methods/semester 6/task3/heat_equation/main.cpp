@@ -22,9 +22,9 @@ void write_to_file(const string& filename, const vector<double>& x, const vector
 class HeatEquationSolver {
 private:
     const double L = M_PI;
-    const double kappa0 = 1.0;
+    const double kappa0 = 0.0;
     const double g0 = 1.0;
-    const double g1 = 1.0;
+    const double g1 = 0.0;
     int n;
     std::vector<double> x;
     std::vector<double> h;
@@ -50,11 +50,12 @@ private:
     } */
 
     double p(double x) const {
-        return 1 + sin(x)/3.0;
+        // return 1 + sin(x)/3.0;
+        return -1;
     }
 
     double q(double x) {
-        const double pi = M_PI;
+        /*const double pi = M_PI;
         const double a = pi/3.0;
         const double b = 2.0*pi/3.0;
         const double k = 20.0;
@@ -63,12 +64,14 @@ private:
         const double transition2 = 1.0/(1.0 + exp(-k*(x - b)));
         double y = 1.0 + transition1 - transition2;
 
-        return y;
+        return y;*/
+        return 1;
     }
 
 
     double f(double x) const {
-        return 1.0 - cos(2.0*x);
+        // return 1.0 - cos(2.0*x);
+        return 0;
     }
 
 public:
