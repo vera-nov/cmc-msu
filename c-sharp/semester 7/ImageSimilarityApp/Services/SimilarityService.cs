@@ -11,7 +11,7 @@ namespace ImageSimilarityApp.Services
     {
         private readonly string _modelPath;
         private static bool _initialized = false;
-        private const int ArtificialDelayMs = 3000;
+        private const int ArtificialDelayMs = 5000;
 
         public SimilarityService(string modelPath)
         {
@@ -28,14 +28,8 @@ namespace ImageSimilarityApp.Services
 
         public async Task<(float similarity, float distance)> GetOrComputeAsync(
             string imagePath1,
-            string imagePath2,
-            CancellationToken cancellationToken = default)
+            string imagePath2)
         {
-            if (string.IsNullOrWhiteSpace(imagePath1))
-                throw new ArgumentException("Path must not be empty.", nameof(imagePath1));
-            if (string.IsNullOrWhiteSpace(imagePath2))
-                throw new ArgumentException("Path must not be empty.", nameof(imagePath2));
-
             var name1 = Path.GetFileName(imagePath1);
             var name2 = Path.GetFileName(imagePath2);
 
@@ -46,11 +40,10 @@ namespace ImageSimilarityApp.Services
             }
 
             await using var db = new AppDbContext();
-            await db.Database.EnsureCreatedAsync(cancellationToken);
+            await db.Database.EnsureCreatedAsync();
 
             var existing = await db.ImagePairResults
-                .FirstOrDefaultAsync(p => p.Image1Name == name1 && p.Image2Name == name2,
-                                     cancellationToken);
+                .FirstOrDefaultAsync(p => p.Image1Name == name1 && p.Image2Name == name2);
 
             if (existing != null)
             {
@@ -70,7 +63,7 @@ namespace ImageSimilarityApp.Services
             var similarity = ArcFaceEmbedder.CosineSimilarity(embedding1, embedding2);
             var distance = 1.0f - similarity;
 
-            await Task.Delay(ArtificialDelayMs, cancellationToken);
+            await Task.Delay(ArtificialDelayMs);
 
             var entity = new ImagePairResult
             {
@@ -81,18 +74,18 @@ namespace ImageSimilarityApp.Services
             };
 
             db.ImagePairResults.Add(entity);
-            await db.SaveChangesAsync(cancellationToken);
+            await db.SaveChangesAsync();
 
             return (similarity, distance);
         }
 
-        public async Task ClearDatabaseAsync(CancellationToken cancellationToken = default)
+        public async Task ClearDatabaseAsync()
         {
             await using var db = new AppDbContext();
-            await db.Database.EnsureCreatedAsync(cancellationToken);
+            await db.Database.EnsureCreatedAsync();
 
             db.ImagePairResults.RemoveRange(db.ImagePairResults);
-            await db.SaveChangesAsync(cancellationToken);
+            await db.SaveChangesAsync();
         }
     }
 }

@@ -1,0 +1,299 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="utf-8" />
+    <title>Image Similarity</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+        }
+
+        .row {
+            display: flex;
+            gap: 20px;
+            align-items: flex-start;
+        }
+
+        .col {
+            width: 50%;
+        }
+
+        .label {
+            font-weight: 600;
+            margin-bottom: 6px;
+        }
+
+        .preview {
+            display: none;
+            width: 100%;
+            max-height: 260px;
+            object-fit: contain;
+            border: 1px solid #ccc;
+            margin-top: 10px;
+            padding: 6px;
+            background: #fafafa;
+        }
+
+            .preview.show {
+                display: block;
+            }
+
+        .buttons {
+            margin-top: 16px;
+            display: flex;
+            gap: 10px;
+        }
+
+        button {
+            padding: 8px 14px;
+        }
+
+            button:disabled {
+                opacity: 0.6;
+            }
+
+        .results {
+            margin-top: 16px;
+            padding: 12px;
+            border: 1px solid #ccc;
+        }
+
+        .status {
+            margin-top: 8px;
+            color: #555;
+        }
+
+        .error {
+            color: #b00020;
+        }
+
+        .success {
+            color: #0a7a2f;
+        }
+    </style>
+</head>
+<body>
+
+    <h2>ArcFace</h2>
+
+    <div class="row">
+        <div class="col">
+            <div class="label">Image 1</div>
+            <input type="file" id="file1" accept="image/*" />
+            <img id="img1" class="preview" alt="Image 1 preview" />
+        </div>
+
+        <div class="col">
+            <div class="label">Image 2</div>
+            <input type="file" id="file2" accept="image/*" />
+            <img id="img2" class="preview" alt="Image 2 preview" />
+        </div>
+    </div>
+
+    <div class="buttons">
+        <button id="calculateBtn" disabled>Calculate</button>
+        <button id="clearBtn">Clear</button>
+    </div>
+
+    <div class="results">
+        <div>Similarity: <span id="similarityValue">—</span></div>
+        <div>Distance: <span id="distanceValue">—</span></div>
+        <div class="status" id="statusText">Please select 2 images.</div>
+    </div>
+
+    <h3>Database</h3>
+    <table id="dbTable" border="1" cellpadding="6" style="margin-top:10px; border-collapse:collapse; width:100%;">
+        <thead>
+            <tr>
+                <th>Image 1</th>
+                <th>Image 2</th>
+                <th>Similarity</th>
+                <th>Distance</th>
+            </tr>
+        </thead>
+        <tbody id="dbTableBody">
+            <tr><td colspan="4">Loading...</td></tr>
+        </tbody>
+    </table>
+
+    <script>
+        const file1Input = document.getElementById('file1');
+        const file2Input = document.getElementById('file2');
+        const img1 = document.getElementById('img1');
+        const img2 = document.getElementById('img2');
+        const calculateBtn = document.getElementById('calculateBtn');
+        const clearBtn = document.getElementById('clearBtn');
+        const similarityValue = document.getElementById('similarityValue');
+        const distanceValue = document.getElementById('distanceValue');
+        const statusText = document.getElementById('statusText');
+        const dbTableBody = document.getElementById('dbTableBody');
+
+        let image1Base64 = null;
+        let image2Base64 = null;
+        let busy = false;
+
+        function updateCalculateButtonState() {
+            calculateBtn.disabled = busy || !image1Base64 || !image2Base64;
+        }
+
+        function hidePreview(img) {
+            img.removeAttribute('src');
+            img.classList.remove('show');
+        }
+
+        function showPreview(img, file) {
+            img.src = URL.createObjectURL(file);
+            img.classList.add('show');
+        }
+
+        function readFileAsBase64(file) {
+            return new Promise((resolve, reject) => {
+                const reader = new FileReader();
+                reader.onload = () => {
+                    const result = reader.result;
+                    resolve(result.split(',')[1]);
+                };
+                reader.onerror = reject;
+                reader.readAsDataURL(file);
+            });
+        }
+
+        async function loadDatabaseResults() {
+            dbTableBody.innerHTML = `<tr><td colspan="4">Loading...</td></tr>`;
+
+            try {
+                const response = await fetch('/results', { method: 'GET' });
+                if (!response.ok) {
+                    dbTableBody.innerHTML = `<tr><td colspan="4">Error loading results: ${response.status}</td></tr>`;
+                    return;
+                }
+
+                const items = await response.json();
+
+                if (!items || items.length === 0) {
+                    dbTableBody.innerHTML = `<tr><td colspan="4">No data</td></tr>`;
+                    return;
+                }
+
+                dbTableBody.innerHTML = items.map(x => `
+              <tr>
+                <td>${x.image1Name ?? ''}</td>
+                <td>${x.image2Name ?? ''}</td>
+                <td>${Number(x.similarity).toFixed(4)}</td>
+                <td>${Number(x.distance).toFixed(4)}</td>
+              </tr>
+            `).join('');
+            } catch (e) {
+                dbTableBody.innerHTML = `<tr><td colspan="4">Server unavailable</td></tr>`;
+            }
+        }
+
+        hidePreview(img1);
+        hidePreview(img2);
+
+        file1Input.addEventListener('change', async () => {
+            const file = file1Input.files[0];
+            if (!file) {
+                image1Base64 = null;
+                hidePreview(img1);
+                updateCalculateButtonState();
+                return;
+            }
+            showPreview(img1, file);
+            image1Base64 = await readFileAsBase64(file);
+            updateCalculateButtonState();
+        });
+
+        file2Input.addEventListener('change', async () => {
+            const file = file2Input.files[0];
+            if (!file) {
+                image2Base64 = null;
+                hidePreview(img2);
+                updateCalculateButtonState();
+                return;
+            }
+            showPreview(img2, file);
+            image2Base64 = await readFileAsBase64(file);
+            updateCalculateButtonState();
+        });
+
+        calculateBtn.addEventListener('click', async () => {
+            if (!image1Base64 || !image2Base64 || busy) return;
+
+            busy = true;
+            updateCalculateButtonState();
+            statusText.textContent = 'Sending request to server...';
+            statusText.className = 'status';
+
+            try {
+                const body = {
+                    image1Name: file1Input.files[0]?.name || 'image1',
+                    image2Name: file2Input.files[0]?.name || 'image2',
+                    image1Base64: image1Base64,
+                    image2Base64: image2Base64
+                };
+
+                const response = await fetch('/analyze', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(body)
+                });
+
+                if (!response.ok) {
+                    const errorText = await response.text();
+                    statusText.textContent = `Error: ${response.status} ${errorText}`;
+                    statusText.className = 'status error';
+                    similarityValue.textContent = '-';
+                    distanceValue.textContent = '—';
+                    return;
+                }
+
+                const data = await response.json();
+                similarityValue.textContent = data.similarity.toFixed(4);
+                distanceValue.textContent = data.distance.toFixed(4);
+                statusText.textContent = 'Success.';
+                statusText.className = 'status success';
+
+                await loadDatabaseResults();
+            } catch (err) {
+                statusText.textContent = 'Error.';
+                statusText.className = 'status error';
+            } finally {
+                busy = false;
+                updateCalculateButtonState();
+            }
+        });
+
+        clearBtn.addEventListener('click', async () => {
+            statusText.textContent = 'Clearing results on a server...';
+            statusText.className = 'status';
+
+            try {
+                const response = await fetch('/results', { method: 'DELETE' });
+                if (!response.ok) {
+                    const text = await response.text();
+                    statusText.textContent = `Clear error: ${response.status} ${text}`;
+                    statusText.className = 'status error';
+                    return;
+                }
+                await loadDatabaseResults();
+
+                statusText.textContent = 'Server cleared.';
+                statusText.className = 'status success';
+            } catch (err) {
+                statusText.textContent = 'Error.';
+                statusText.className = 'status error';
+            }
+
+            similarityValue.textContent = '—';
+            distanceValue.textContent = '—';
+        });
+
+        updateCalculateButtonState();
+
+        loadDatabaseResults();
+    </script>
+
+</body>
+</html>

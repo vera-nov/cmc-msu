@@ -20,7 +20,6 @@ namespace ImageSimilarityApp
         private string? _rightImagePath;
 
         private bool _isComputing = false;
-        private CancellationTokenSource? _cts;
 
         public MainWindow()
         {
@@ -137,13 +136,11 @@ namespace ImageSimilarityApp
                 return;
             }
 
-            _cts?.Cancel();
-            _cts = new CancellationTokenSource();
 
-            _ = ComputeSimilarityAsync(_cts.Token);
+            _ = ComputeSimilarityAsync();
         }
 
-        private async Task ComputeSimilarityAsync(CancellationToken cancellationToken)
+        private async Task ComputeSimilarityAsync()
         {
             _isComputing = true;
             TxtStatus.Text = "Вычисление сходства.";
@@ -154,10 +151,7 @@ namespace ImageSimilarityApp
                     return;
 
                 var (similarity, distance) = await _similarityService
-                    .GetOrComputeAsync(_leftImagePath, _rightImagePath, cancellationToken);
-
-                if (cancellationToken.IsCancellationRequested)
-                    return;
+                    .GetOrComputeAsync(_leftImagePath, _rightImagePath);
 
                 TxtSimilarity.Text = similarity.ToString("F4");
                 TxtDistance.Text = distance.ToString("F4");
