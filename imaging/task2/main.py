@@ -87,64 +87,47 @@ def bilateral(sigma_d, sigma_r, img):
             res[i, j] = (region * weights).sum() / weights.sum()
 
     return res
-    
+
 
 def compare(img1, img2):
-    img1 = img1 / 255
-    img2 = img2 / 255
+    def get_spectrum(img):
+        img = img.astype(np.float64) / 255.0
+        h, w = img.shape
+
+        # преобразование фурье + амплитуда
+        spectrum = np.abs(fft2(img))
+        spectrum = np.fft.fftshift(spectrum)
+
+        # небольшое размытие против алиасинга
+        spectrum = gauss(0.5, spectrum)
+
+        # полярные координаты
+        radius = min(h, w) // 2
+        polar = warp_polar(
+            spectrum,
+            center=(h // 2, w // 2),
+            radius=radius,
+            output_shape=(360, radius),
+            scaling='linear'
+        )
+        # фурье вдоль угловой оси
+        angular_fft = np.abs(np.fft.fft(polar, axis=0))
+        return angular_fft
+
+    spectrum1 = get_spectrum(img1)
+    spectrum2 = get_spectrum(img2)
+
+    energy1 = np.mean(spectrum1 ** 2)
+    energy2 = np.mean(spectrum2 ** 2)
+    energy = (energy1 + energy2) / 2
+    if energy == 0:
+        return int(np.array_equal(img1, img2))
     
-    # оконное преобразование
-    img1 = img1 * window('hann', img1.shape)
-    img2 = img2 * window('hann', img2.shape)
+    error = mse(spectrum1, spectrum2) / energy
+    # print(error)
 
-    # вычисляем преобразование Фурье
-    img1 = np.abs(fft2(img1))
-    img2 = np.abs(fft2(img2))
-
-    img1 = np.fft.fftshift(img1)
-    img2 = np.fft.fftshift(img2)
-    '''
-    vis = np.log(img1)
-    vis = np.ceil(np.interp(vis, (vis.min(), vis.max()), (0, 255)))
-    print(vis)
-    skimage.io.imsave('fft1.bmp', vis.astype(np.uint8))
-    '''
-
-    # размытие для уменьшения алиасинга
-    img1 = gauss(0.5, img1)
-    img2 = gauss(0.5, img2)
-    
-    # переводим в полярные координаты
-    img1 = warp_polar(img1, scaling='log')
-    img2 = warp_polar(img2, scaling='log')
-    '''
-    vis = img1
-    vis = np.ceil(np.interp(vis, (vis.min(), vis.max()), (0, 255)))
-    print(vis)
-    skimage.io.imsave('polar1.bmp', vis.astype(np.uint8))
-    '''
-
-    # преобразование Фурье угловой оси
-    img1 = np.abs(fft2(img1, axes=(0,)))
-    img2 = np.abs(fft2(img2, axes=(0,)))
-
-    img1 = np.fft.fftshift(img1)
-    img2 = np.fft.fftshift(img2)
-    '''
-    vis = np.log(img1)
-    vis = np.ceil(np.interp(vis, (vis.min(), vis.max()), (0, 256)))
-    print(vis)
-    skimage.io.imsave('fft2.bmp', vis.astype(np.uint8))
-    '''
-
-    # сравнение изображений по метрике ssim
-    ssim_val = ssim(img1, img2)
-    # print(ssim_val)
-    threshold = 0.98
-    if ssim_val > threshold:
-        return 1
-    else:
-        return 0
+    threshold = 0.02
+    return int(error < threshold)
 
 
 if __name__ == '__main__':
